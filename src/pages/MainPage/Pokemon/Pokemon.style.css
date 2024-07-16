@@ -1,0 +1,9 @@
+.pokeImg {
+  transition: 0.5s;
+  cursor: pointer;
+}
+
+.pokeImg:hover {
+  transform: scale(1.03);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.2);
+}

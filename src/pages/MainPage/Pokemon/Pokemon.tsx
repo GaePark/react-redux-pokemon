@@ -29,6 +29,7 @@ const Pokemon = ({ poke }: pokemonTypes): JSX.Element => {
   const onClickDetail = () => {
     navigate(`/${poke.name}`);
   };
+
   return (
     <div
       style={{
@@ -39,10 +40,16 @@ const Pokemon = ({ poke }: pokemonTypes): JSX.Element => {
         alignItems: "center",
       }}
     >
-      <div style={{ width: "80%" }}>
+      <div style={{ width: "70%" }}>
         <div
           className="pokeImg"
-          style={{ position: "relative" }}
+          style={{
+            position: "relative",
+            width: "100%",
+            minHeight: "188px",
+            border: "2px solid #cccccc",
+            borderRadius: "5px",
+          }}
           onClick={onClickDetail}
         >
           {pokeDB["sprites"] && (
@@ -52,18 +59,13 @@ const Pokemon = ({ poke }: pokemonTypes): JSX.Element => {
               }
               alt={poke.name}
               preview={false}
-              style={{
-                width: "100%",
-                border: "2px solid #cccccc",
-                borderRadius: "5px",
-              }}
             />
           )}
           <div style={{ position: "absolute", top: "2px", right: "5px" }}>
             NO. {pokeDB.id}
           </div>
         </div>
-        <div>{upper_name}</div>
+        <div style={{ fontWeight: "bold" }}>{upper_name}</div>
       </div>
     </div>
   );

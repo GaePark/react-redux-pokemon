@@ -5,8 +5,12 @@ interface resultsType {
   url: string;
 }
 
-const initialState: { showPoke: resultsType[] } = {
+const initialState: {
+  showPoke: resultsType[];
+  searchShowPoke: resultsType[];
+} = {
   showPoke: [],
+  searchShowPoke: [],
 };
 
 export const pokemonSlice = createSlice({
@@ -16,9 +20,12 @@ export const pokemonSlice = createSlice({
     setShowPokemon: (state, action: PayloadAction<resultsType[]>) => {
       state.showPoke = action.payload;
     },
+    setSearchShowPokemon: (state, action: PayloadAction<resultsType[]>) => {
+      state.searchShowPoke = action.payload;
+    },
   },
 });
 
-export const { setShowPokemon } = pokemonSlice.actions;
+export const { setShowPokemon, setSearchShowPokemon } = pokemonSlice.actions;
 
 export default pokemonSlice.reducer;

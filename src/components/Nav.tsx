@@ -1,12 +1,7 @@
-import { Menu } from "antd";
 import { Header } from "antd/es/layout/layout";
 import React from "react";
 
 const Nav = () => {
-  const items = new Array(3).fill(null).map((_, index) => ({
-    key: String(index + 1),
-    label: `nav ${index + 1}`,
-  }));
   return (
     <Header
       style={{
@@ -17,16 +12,7 @@ const Nav = () => {
         display: "flex",
         alignItems: "center",
       }}
-    >
-      <div className="demo-logo" />
-      <Menu
-        theme="dark"
-        mode="horizontal"
-        defaultSelectedKeys={["2"]}
-        items={items}
-        style={{ flex: 1, minWidth: 0 }}
-      />
-    </Header>
+    ></Header>
   );
 };
 

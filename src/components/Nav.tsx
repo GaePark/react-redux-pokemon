@@ -1,7 +1,13 @@
 import { Header } from "antd/es/layout/layout";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 const Nav = () => {
+  const navigate = useNavigate();
+
+  const onClickHome = (): void => {
+    navigate("/");
+  };
   return (
     <Header
       style={{
@@ -12,7 +18,14 @@ const Nav = () => {
         display: "flex",
         alignItems: "center",
       }}
-    ></Header>
+    >
+      <img
+        src="./images/pngegg.png"
+        alt="logo"
+        style={{ height: "100%", cursor: "pointer" }}
+        onClick={onClickHome}
+      />
+    </Header>
   );
 };
 

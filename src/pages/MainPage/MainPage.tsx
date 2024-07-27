@@ -40,7 +40,7 @@ const MainPage = (): JSX.Element => {
   }, []);
 
   const fetchPokemon = async (): Promise<void> => {
-    const { data } = await axios.get(`${requests.fetchPokemon}`);
+    const { data } = await axios.get(`${requests.fetchAllPokemon}`);
     dispatch(setAllPokemon(data.results));
     const show = data.results.filter(
       (value: resultsType, i: number) => i + 1 <= 20

@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
-import axios from "axios";
 import { Image } from "antd";
 import "./Pokemon.style.css";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 interface pokemonTypes {
   poke: {
@@ -14,19 +14,18 @@ interface pokemonTypes {
 const Pokemon = ({ poke }: pokemonTypes): JSX.Element => {
   const [pokeDB, setPokeDB] = useState<any>([]);
   const upper_name = poke.name.toUpperCase();
-
   const navigate = useNavigate();
 
   useEffect(() => {
-    fetchSpecies();
+    fetchPokemon();
   }, []);
 
-  const fetchSpecies = async (): Promise<void> => {
+  const fetchPokemon = async (): Promise<void> => {
     const { data } = await axios.get(poke.url);
     setPokeDB(data);
   };
 
-  const onClickDetail = () => {
+  const onClickDetail = (): void => {
     navigate(`/${poke.name}`);
   };
 

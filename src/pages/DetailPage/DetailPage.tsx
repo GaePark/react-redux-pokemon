@@ -12,22 +12,26 @@ import {
   speciesTypes,
 } from "../../types/species.Types";
 import { PokeDBTypes, statsTypes } from "../../types/Pokemon.Types";
+import { Link } from "react-router-dom";
 
 const DetailPage = (): JSX.Element => {
   const location = useLocation();
-  const navigate = useNavigate();
 
   const [pokeDB, setPokeDB] = useState<PokeDBTypes>();
   const [speciesDB, setSpeciesDB] = useState<speciesTypes>();
   const [loading, setLoading] = useState<boolean>(true);
   const [flavor, setFlavor] = useState<string>("");
   const [genera, setGenera] = useState<string>("");
+  const [next, setNext] = useState<number>(0);
+  const [prev, setPrev] = useState<number>(0);
+  const [pokeid, setPokeId] = useState<string | number>(location.pathname);
 
   useEffect(() => {
     fetchPokemonData();
-  }, []);
+  }, [pokeid]);
 
   const fetchPokemonData = async (): Promise<void> => {
+    setLoading(true);
     let genera;
     const poke = await axios.get(
       `${requests.fetchPokemon}${location.pathname}`
@@ -71,25 +75,17 @@ const DetailPage = (): JSX.Element => {
     setPokeDB(pokeDB);
     setSpeciesDB(speciesDB);
     setLoading(false);
-  };
 
-  const onClickPrev = (): void => {
-    if (pokeDB?.id === 1) {
-      navigate(`/1025`);
-      window.location.reload();
-      return;
+    if (pokeDB.id === 1) {
+      setPrev(1025);
+    } else {
+      setPrev(pokeDB.id - 1);
     }
-    navigate(`/${pokeDB ? pokeDB.id - 1 : ""}`);
-    window.location.reload();
-  };
-  const onClickNext = (): void => {
-    if (pokeDB?.id === 1025) {
-      navigate(`/1`);
-      window.location.reload();
-      return;
+    if (pokeDB.id === 1025) {
+      setNext(1);
+    } else {
+      setNext(pokeDB.id + 1);
     }
-    navigate(`/${pokeDB ? pokeDB.id + 1 : ""}`);
-    window.location.reload();
   };
 
   if (loading) {
@@ -112,24 +108,26 @@ const DetailPage = (): JSX.Element => {
             justifyContent: "space-between",
           }}
         >
-          <FaAngleLeft
-            style={{
-              width: "48px",
-              height: "48px",
-              color: "#333",
-              cursor: "pointer",
-            }}
-            onClick={onClickPrev}
-          />
-          <FaAngleRight
-            style={{
-              width: "48px",
-              height: "48px",
-              color: "#333",
-              cursor: "pointer",
-            }}
-            onClick={onClickNext}
-          />
+          <Link to={`/${prev}`} onClick={() => setPokeId(prev)}>
+            <FaAngleLeft
+              style={{
+                width: "48px",
+                height: "48px",
+                color: "#333",
+                cursor: "pointer",
+              }}
+            />
+          </Link>
+          <Link to={`/${next}`} onClick={() => setPokeId(next)}>
+            <FaAngleRight
+              style={{
+                width: "48px",
+                height: "48px",
+                color: "#333",
+                cursor: "pointer",
+              }}
+            />
+          </Link>
         </div>
         <div
           style={{

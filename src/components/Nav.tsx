@@ -21,7 +21,7 @@ const Nav = () => {
       }}
     >
       <img
-        src="./images/pngegg.png"
+        src="./react-redux-pokemon/images/pngegg.png"
         alt="logo"
         style={{ height: "100%", cursor: "pointer" }}
         onClick={onClickHome}

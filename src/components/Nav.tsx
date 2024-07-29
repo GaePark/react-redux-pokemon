@@ -7,6 +7,7 @@ const Nav = () => {
 
   const onClickHome = (): void => {
     navigate("/");
+    window.location.reload();
   };
   return (
     <Header

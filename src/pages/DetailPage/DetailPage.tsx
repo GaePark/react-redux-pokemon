@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from "../../api/axios";
 import requests from "../../api/requests";
@@ -6,13 +6,19 @@ import { Content } from "antd/es/layout/layout";
 import { Image } from "antd";
 import * as S from "./DetailPage.styles";
 import { FaAngleRight, FaAngleLeft } from "react-icons/fa";
+import {
+  flavor_text_entriesTypes,
+  generaTypes,
+  speciesTypes,
+} from "../../types/species.Types";
+import { PokeDBTypes, statsTypes } from "../../types/Pokemon.Types";
 
 const DetailPage = (): JSX.Element => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [pokeDB, setPokeDB] = useState<any>([]);
-  const [speciesDB, setSpeciesDB] = useState<any>([]);
+  const [pokeDB, setPokeDB] = useState<PokeDBTypes>();
+  const [speciesDB, setSpeciesDB] = useState<speciesTypes>();
   const [loading, setLoading] = useState<boolean>(true);
   const [flavor, setFlavor] = useState<string>("");
   const [genera, setGenera] = useState<string>("");
@@ -23,7 +29,7 @@ const DetailPage = (): JSX.Element => {
 
   const fetchPokemonData = async (): Promise<void> => {
     let genera;
-    const { data } = await axios.get(
+    const poke = await axios.get(
       `${requests.fetchPokemon}${location.pathname}`
     );
     const species = await axios.get(
@@ -31,53 +37,58 @@ const DetailPage = (): JSX.Element => {
     );
 
     if (
-      species.data.genera.find((genera: any) => genera.language.name === "ko")
+      species.data.genera.find(
+        (genera: generaTypes) => genera.language.name === "ko"
+      )
     ) {
       genera = species.data.genera.find(
-        (genera: any) => genera.language.name === "ko"
+        (genera: generaTypes) => genera.language.name === "ko"
       );
     } else {
       genera = species.data.genera.find(
-        (genera: any) => genera.language.name === "en"
+        (genera: generaTypes) => genera.language.name === "en"
       );
     }
 
     if (
       species.data.flavor_text_entries.find(
-        (text: any) => text.language.name === "ko"
+        (text: flavor_text_entriesTypes) => text.language.name === "ko"
       )
     ) {
       const text = species.data.flavor_text_entries.find(
-        (text: any) => text.language.name === "ko"
+        (text: flavor_text_entriesTypes) => text.language.name === "ko"
       );
       setFlavor(text.flavor_text);
     } else {
       const text = species.data.flavor_text_entries.find(
-        (text: any) => text.language.name === "en"
+        (text: flavor_text_entriesTypes) => text.language.name === "en"
       );
       setFlavor(text.flavor_text);
     }
+    const pokeDB: PokeDBTypes = poke.data;
+    const speciesDB: speciesTypes = species.data;
     setGenera(genera.genus);
-    setPokeDB(data);
-    setSpeciesDB(species.data);
+    setPokeDB(pokeDB);
+    setSpeciesDB(speciesDB);
     setLoading(false);
   };
+
   const onClickPrev = (): void => {
-    if (pokeDB.id === 1) {
+    if (pokeDB?.id === 1) {
       navigate(`/1025`);
       window.location.reload();
       return;
     }
-    navigate(`/${pokeDB.id - 1}`);
+    navigate(`/${pokeDB ? pokeDB.id - 1 : ""}`);
     window.location.reload();
   };
   const onClickNext = (): void => {
-    if (pokeDB.id === 1025) {
+    if (pokeDB?.id === 1025) {
       navigate(`/1`);
       window.location.reload();
       return;
     }
-    navigate(`/${pokeDB.id + 1}`);
+    navigate(`/${pokeDB ? pokeDB.id + 1 : ""}`);
     window.location.reload();
   };
 
@@ -128,7 +139,7 @@ const DetailPage = (): JSX.Element => {
             overflow: "hidden",
             width: "100%",
             marginTop: "20px",
-            border: `4px solid ${speciesDB.color.name}`,
+            border: `4px solid ${speciesDB?.color.name}`,
           }}
         >
           <div
@@ -138,13 +149,18 @@ const DetailPage = (): JSX.Element => {
               justifyContent: "space-around",
             }}
           >
-            <Image
-              src={
-                pokeDB["sprites"]["other"]["official-artwork"]["front_default"]
-              }
-              alt={location.pathname}
-              preview={false}
-            />
+            {pokeDB?.sprites["other"]["official-artwork"]["front_default"] && (
+              <Image
+                src={
+                  pokeDB["sprites"]["other"]["official-artwork"][
+                    "front_default"
+                  ]
+                }
+                alt={location.pathname}
+                preview={false}
+                style={{ width: "475px", height: "475px" }}
+              />
+            )}
             <div
               style={{
                 width: "50%",
@@ -153,9 +169,9 @@ const DetailPage = (): JSX.Element => {
                 justifyContent: "space-around",
               }}
             >
-              <h2 style={{ color: "#ccc " }}>NO. {pokeDB.id}</h2>
+              <h2 style={{ color: "#ccc " }}>NO. {pokeDB?.id}</h2>
               <h1 style={{ textAlign: "center" }}>
-                {pokeDB.species.name.toUpperCase()}
+                {pokeDB?.species.name.toUpperCase()}
               </h1>
               <div style={{ textAlign: "center" }}>{flavor}</div>
               <table style={{ width: "100%" }}>
@@ -168,13 +184,13 @@ const DetailPage = (): JSX.Element => {
                   <tr>
                     <th>
                       <img
-                        src={`./images/${pokeDB.types[0].type.name}.svg`}
+                        src={`./images/${pokeDB?.types[0].type.name}.svg`}
                         alt="0"
                         style={{ width: "24px" }}
                       />{" "}
-                      {pokeDB.types[1] ? (
+                      {pokeDB?.types[1] ? (
                         <img
-                          src={`./images/${pokeDB.types[1].type.name}.svg`}
+                          src={`./images/${pokeDB?.types[1].type.name}.svg`}
                           alt="1"
                           style={{ width: "24px" }}
                         />
@@ -182,14 +198,14 @@ const DetailPage = (): JSX.Element => {
                         ""
                       )}
                     </th>
-                    <th>{pokeDB.height}0cm</th>
+                    <th>{pokeDB?.height}0cm</th>
                     <th>{genera}</th>
                   </tr>
                 </tbody>
               </table>
               <div>
-                {pokeDB.stats.map((el: any) => (
-                  <div style={{ position: "relative" }}>
+                {pokeDB?.stats.map((el: statsTypes) => (
+                  <div style={{ position: "relative" }} key={el.stat.name}>
                     <span style={{ fontWeight: "bold" }}>
                       {el.stat.name.toUpperCase()}
                     </span>
@@ -208,7 +224,7 @@ const DetailPage = (): JSX.Element => {
                     <S.Progress
                       value={el.base_stat}
                       max={255}
-                      color={speciesDB.color.name}
+                      color={speciesDB?.color.name}
                     ></S.Progress>
                     <span
                       style={{

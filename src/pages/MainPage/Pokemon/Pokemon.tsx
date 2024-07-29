@@ -3,6 +3,7 @@ import { Image } from "antd";
 import "./Pokemon.style.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { PokeDBTypes } from "../../../types/Pokemon.Types";
 
 interface pokemonTypes {
   poke: {
@@ -12,7 +13,7 @@ interface pokemonTypes {
 }
 
 const Pokemon = ({ poke }: pokemonTypes): JSX.Element => {
-  const [pokeDB, setPokeDB] = useState<any>([]);
+  const [pokeDB, setPokeDB] = useState<PokeDBTypes>();
   const upper_name = poke.name.toUpperCase();
   const navigate = useNavigate();
 
@@ -51,7 +52,7 @@ const Pokemon = ({ poke }: pokemonTypes): JSX.Element => {
           }}
           onClick={onClickDetail}
         >
-          {pokeDB["sprites"] && (
+          {pokeDB?.sprites["other"]["official-artwork"]["front_default"] && (
             <Image
               src={
                 pokeDB["sprites"]["other"]["official-artwork"]["front_default"]
@@ -61,7 +62,7 @@ const Pokemon = ({ poke }: pokemonTypes): JSX.Element => {
             />
           )}
           <div style={{ position: "absolute", top: "2px", right: "5px" }}>
-            NO. {pokeDB.id}
+            NO. {pokeDB?.id}
           </div>
         </div>
         <div style={{ fontWeight: "bold" }}>{upper_name}</div>

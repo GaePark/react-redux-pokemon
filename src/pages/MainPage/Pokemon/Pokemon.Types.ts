@@ -1,3 +1,0 @@
-export {};
-
-export interface PokeDBTypes {}

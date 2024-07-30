@@ -55,13 +55,11 @@ const Pokemon = ({ poke }: pokemonTypes): JSX.Element => {
           }}
           onClick={onClickDetail}
         >
-          {pokeDB?.sprites.other["official-artwork"]["front_default"] && (
-            <Image
-              src={pokeDB.sprites.other["official-artwork"]["front_default"]}
-              alt={poke.name}
-              preview={false}
-            />
-          )}
+          <Image
+            src={pokeDB?.sprites.other["official-artwork"]["front_default"]}
+            alt={poke.name}
+            preview={false}
+          />
           <div style={{ position: "absolute", top: "2px", right: "5px" }}>
             NO. {pokeDB?.id}
           </div>

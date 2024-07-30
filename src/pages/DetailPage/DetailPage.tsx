@@ -146,14 +146,12 @@ const DetailPage = (): JSX.Element => {
               justifyContent: "space-around",
             }}
           >
-            {pokeDB?.sprites.other && (
-              <Image
-                src={pokeDB.sprites.other["official-artwork"]["front_default"]}
-                alt={location.pathname}
-                preview={false}
-                style={{ width: "475px", height: "475px" }}
-              />
-            )}
+            <Image
+              src={pokeDB?.sprites.other["official-artwork"]["front_default"]}
+              alt={location.pathname}
+              preview={false}
+              style={{ width: "475px", height: "475px" }}
+            />
             <div
               style={{
                 width: "50%",

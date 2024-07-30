@@ -4,7 +4,6 @@ import "./Pokemon.style.css";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { PokeDBTypes } from "../../../types/Pokemon.Types";
-import requests from "../../../api/requests";
 
 interface pokemonTypes {
   poke: {

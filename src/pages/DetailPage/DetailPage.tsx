@@ -31,7 +31,6 @@ const DetailPage = (): JSX.Element => {
   }, [pokeid]);
 
   const fetchPokemonData = async (): Promise<void> => {
-    setLoading(true);
     let genera;
     const poke = await axios.get(
       `${requests.fetchPokemon}${location.pathname}`
@@ -147,13 +146,9 @@ const DetailPage = (): JSX.Element => {
               justifyContent: "space-around",
             }}
           >
-            {pokeDB?.sprites["other"]["official-artwork"]["front_default"] && (
+            {pokeDB?.species && (
               <Image
-                src={
-                  pokeDB["sprites"]["other"]["official-artwork"][
-                    "front_default"
-                  ]
-                }
+                src={pokeDB.sprites.other["official-artwork"]["front_default"]}
                 alt={location.pathname}
                 preview={false}
                 style={{ width: "475px", height: "475px" }}

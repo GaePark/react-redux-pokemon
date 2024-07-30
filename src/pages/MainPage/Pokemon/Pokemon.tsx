@@ -52,7 +52,7 @@ const Pokemon = ({ poke }: pokemonTypes): JSX.Element => {
           }}
           onClick={onClickDetail}
         >
-          {pokeDB?.sprites.other["official-artwork"]["front_default"] && (
+          {pokeDB?.sprites.other && (
             <Image
               src={
                 pokeDB["sprites"]["other"]["official-artwork"]["front_default"]

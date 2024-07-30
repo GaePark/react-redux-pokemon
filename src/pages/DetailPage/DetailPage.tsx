@@ -146,7 +146,7 @@ const DetailPage = (): JSX.Element => {
               justifyContent: "space-around",
             }}
           >
-            {pokeDB?.species && (
+            {pokeDB?.sprites.other && (
               <Image
                 src={pokeDB.sprites.other["official-artwork"]["front_default"]}
                 alt={location.pathname}

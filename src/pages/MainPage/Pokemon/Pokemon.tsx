@@ -13,7 +13,7 @@ interface pokemonTypes {
 }
 
 const Pokemon = ({ poke }: pokemonTypes): JSX.Element => {
-  const [pokeDB, setPokeDB] = useState<PokeDBTypes>();
+  const [pokeDB, setPokeDB] = useState<any>();
   const upper_name = poke.name.toUpperCase();
   const navigate = useNavigate();
 

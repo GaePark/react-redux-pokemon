@@ -24,6 +24,7 @@ const Pokemon = ({ poke }: pokemonTypes): JSX.Element => {
   const fetchPokemon = async (): Promise<void> => {
     const { data } = await axios.get(poke.url);
     setPokeDB(data);
+    console.log(data);
   };
 
   const onClickDetail = (): void => {

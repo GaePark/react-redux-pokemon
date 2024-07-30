@@ -33,10 +33,10 @@ const DetailPage = (): JSX.Element => {
   const fetchPokemonData = async (): Promise<void> => {
     let genera;
     const poke = await axios.get(
-      `${requests.fetchPokemon}${location.pathname}`
+      `${requests.fetchPokemon}/${location.pathname}`
     );
     const species = await axios.get(
-      `${requests.fetchSpecies}${location.pathname}`
+      `${requests.fetchSpecies}/${location.pathname}`
     );
 
     if (

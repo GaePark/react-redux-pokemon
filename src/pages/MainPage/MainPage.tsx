@@ -160,7 +160,7 @@ const MainPage = (): JSX.Element => {
               width: "100%",
             }}
           >
-            {renderSearchPokemon()}
+            {searchShowPoke && renderSearchPokemon()}
           </div>
           <Pagination
             defaultCurrent={1}
@@ -188,7 +188,7 @@ const MainPage = (): JSX.Element => {
             }}
           >
             {loading && <div>LOADING...</div>}
-            {renderPokemon()}
+            {showPoke && renderPokemon()}
           </div>
           <Pagination
             defaultCurrent={1}

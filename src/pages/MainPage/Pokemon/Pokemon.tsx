@@ -54,9 +54,7 @@ const Pokemon = ({ poke }: pokemonTypes): JSX.Element => {
         >
           {pokeDB?.sprites.other && (
             <Image
-              src={
-                pokeDB["sprites"]["other"]["official-artwork"]["front_default"]
-              }
+              src={pokeDB.sprites.other["official-artwork"]["front_default"]}
               alt={poke.name}
               preview={false}
             />

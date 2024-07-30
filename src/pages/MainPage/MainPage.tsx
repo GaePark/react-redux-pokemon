@@ -59,6 +59,7 @@ const MainPage = (): JSX.Element => {
     const limit = page * 20;
     const show = allPoke.slice(limit - 20, limit);
     dispatch(setShowPokemon(show));
+    console.log(page);
   };
 
   const onChangeSearchPage = (page: number): void => {

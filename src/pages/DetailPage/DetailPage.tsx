@@ -87,6 +87,8 @@ const DetailPage = (): JSX.Element => {
     }
   };
 
+  const img = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeDB?.id}.png`;
+
   if (loading) {
     return <Content>LOADING...</Content>;
   } else {
@@ -146,12 +148,14 @@ const DetailPage = (): JSX.Element => {
               justifyContent: "space-around",
             }}
           >
-            <Image
-              src={pokeDB?.sprites.other["official-artwork"]["front_default"]}
-              alt={location.pathname}
-              preview={false}
-              style={{ width: "475px", height: "475px" }}
-            />
+            {pokeDB && (
+              <Image
+                src={img}
+                alt={location.pathname}
+                preview={false}
+                style={{ width: "475px", height: "475px" }}
+              />
+            )}
             <div
               style={{
                 width: "50%",

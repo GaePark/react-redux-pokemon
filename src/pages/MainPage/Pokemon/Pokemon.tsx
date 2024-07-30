@@ -26,12 +26,13 @@ const Pokemon = ({ poke }: pokemonTypes): JSX.Element => {
     const data = await axios.get(`${requests.fetchPokemon}/${poke.name}`);
     const pokeDB = data.data;
     setPokeDB(pokeDB);
-    console.log(pokeDB);
   };
 
   const onClickDetail = (): void => {
     navigate(`/${poke.name}`);
   };
+
+  const img = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokeDB?.id}.png`;
 
   return (
     <div
@@ -55,11 +56,7 @@ const Pokemon = ({ poke }: pokemonTypes): JSX.Element => {
           }}
           onClick={onClickDetail}
         >
-          <Image
-            src={pokeDB?.sprites.other["official-artwork"]["front_default"]}
-            alt={poke.name}
-            preview={false}
-          />
+          {pokeDB && <Image src={img} alt={poke.name} preview={false} />}
           <div style={{ position: "absolute", top: "2px", right: "5px" }}>
             NO. {pokeDB?.id}
           </div>

@@ -28,7 +28,7 @@ const DetailPage = (): JSX.Element => {
 
   useEffect(() => {
     fetchPokemonData();
-  }, [pokeid]);
+  }, [location.pathname]);
 
   const fetchPokemonData = async (): Promise<void> => {
     let genera;
@@ -109,7 +109,7 @@ const DetailPage = (): JSX.Element => {
             justifyContent: "space-between",
           }}
         >
-          <Link to={`/${prev}`} onClick={() => setPokeId(prev)}>
+          <Link to={`/${prev}`}>
             <FaAngleLeft
               style={{
                 width: "48px",
@@ -119,7 +119,7 @@ const DetailPage = (): JSX.Element => {
               }}
             />
           </Link>
-          <Link to={`/${next}`} onClick={() => setPokeId(next)}>
+          <Link to={`/${next}`}>
             <FaAngleRight
               style={{
                 width: "48px",

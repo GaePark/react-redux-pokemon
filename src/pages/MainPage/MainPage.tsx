@@ -50,16 +50,15 @@ const MainPage = (): JSX.Element => {
   };
 
   const renderPokemon = (): React.ReactNode =>
-    showPoke.map((poke) => <Pokemon key={poke.name} poke={poke} />);
+    showPoke?.map((poke) => <Pokemon key={poke.name} poke={poke} />);
 
   const renderSearchPokemon = (): React.ReactNode =>
-    searchShowPoke.map((poke) => <Pokemon key={poke.name} poke={poke} />);
+    searchShowPoke?.map((poke) => <Pokemon key={poke.name} poke={poke} />);
 
   const onChangePage = (page: number): void => {
     const limit = page * 20;
     const show = allPoke.slice(limit - 20, limit);
     dispatch(setShowPokemon(show));
-    console.log(page);
   };
 
   const onChangeSearchPage = (page: number): void => {

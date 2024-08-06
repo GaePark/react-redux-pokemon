@@ -23,8 +23,12 @@ const Pokemon = ({ poke }: pokemonTypes): JSX.Element => {
   }, []);
 
   const fetchPokemon = async (): Promise<void> => {
-    const { data } = await axios.get(`${requests.fetchPokemon}/${poke.name}`);
-    setPokeDB(data);
+    try {
+      const { data } = await axios.get(`${requests.fetchPokemon}/${poke.name}`);
+      setPokeDB(data);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   const onClickDetail = (): void => {

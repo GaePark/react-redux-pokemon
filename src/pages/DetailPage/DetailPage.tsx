@@ -16,6 +16,7 @@ import { Link } from "react-router-dom";
 
 const DetailPage = (): JSX.Element => {
   const location = useLocation();
+  const navigate = useNavigate();
 
   const [pokeDB, setPokeDB] = useState<PokeDBTypes>();
   const [speciesDB, setSpeciesDB] = useState<speciesTypes>();
@@ -31,59 +32,64 @@ const DetailPage = (): JSX.Element => {
   }, [location.pathname]);
 
   const fetchPokemonData = async (): Promise<void> => {
-    let genera;
-    const poke = await axios.get(
-      `${requests.fetchPokemon}/${location.pathname}`
-    );
-    const species = await axios.get(
-      `${requests.fetchSpecies}/${location.pathname}`
-    );
+    try {
+      let genera;
+      const poke = await axios.get(
+        `${requests.fetchPokemon}/${location.pathname}`
+      );
+      const species = await axios.get(
+        `${requests.fetchSpecies}/${location.pathname}`
+      );
 
-    if (
-      species.data.genera.find(
-        (genera: generaTypes) => genera.language.name === "ko"
-      )
-    ) {
-      genera = species.data.genera.find(
-        (genera: generaTypes) => genera.language.name === "ko"
-      );
-    } else {
-      genera = species.data.genera.find(
-        (genera: generaTypes) => genera.language.name === "en"
-      );
-    }
+      if (
+        species.data.genera.find(
+          (genera: generaTypes) => genera.language.name === "ko"
+        )
+      ) {
+        genera = species.data.genera.find(
+          (genera: generaTypes) => genera.language.name === "ko"
+        );
+      } else {
+        genera = species.data.genera.find(
+          (genera: generaTypes) => genera.language.name === "en"
+        );
+      }
 
-    if (
-      species.data.flavor_text_entries.find(
-        (text: flavor_text_entriesTypes) => text.language.name === "ko"
-      )
-    ) {
-      const text = species.data.flavor_text_entries.find(
-        (text: flavor_text_entriesTypes) => text.language.name === "ko"
-      );
-      setFlavor(text.flavor_text);
-    } else {
-      const text = species.data.flavor_text_entries.find(
-        (text: flavor_text_entriesTypes) => text.language.name === "en"
-      );
-      setFlavor(text.flavor_text);
-    }
-    const pokeDB: PokeDBTypes = poke.data;
-    const speciesDB: speciesTypes = species.data;
-    setGenera(genera.genus);
-    setPokeDB(pokeDB);
-    setSpeciesDB(speciesDB);
-    setLoading(false);
+      if (
+        species.data.flavor_text_entries.find(
+          (text: flavor_text_entriesTypes) => text.language.name === "ko"
+        )
+      ) {
+        const text = species.data.flavor_text_entries.find(
+          (text: flavor_text_entriesTypes) => text.language.name === "ko"
+        );
+        setFlavor(text.flavor_text);
+      } else {
+        const text = species.data.flavor_text_entries.find(
+          (text: flavor_text_entriesTypes) => text.language.name === "en"
+        );
+        setFlavor(text.flavor_text);
+      }
+      const pokeDB: PokeDBTypes = poke.data;
+      const speciesDB: speciesTypes = species.data;
+      setGenera(genera.genus);
+      setPokeDB(pokeDB);
+      setSpeciesDB(speciesDB);
+      setLoading(false);
 
-    if (pokeDB.id === 1) {
-      setPrev(1025);
-    } else {
-      setPrev(pokeDB.id - 1);
-    }
-    if (pokeDB.id === 1025) {
-      setNext(1);
-    } else {
-      setNext(pokeDB.id + 1);
+      if (pokeDB.id === 1) {
+        setPrev(1025);
+      } else {
+        setPrev(pokeDB.id - 1);
+      }
+      if (pokeDB.id === 1025) {
+        setNext(1);
+      } else {
+        setNext(pokeDB.id + 1);
+      }
+    } catch (error) {
+      alert(error);
+      navigate(-1);
     }
   };
 

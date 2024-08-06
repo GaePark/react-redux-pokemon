@@ -40,13 +40,17 @@ const MainPage = (): JSX.Element => {
   }, []);
 
   const fetchPokemon = async (): Promise<void> => {
-    const { data } = await axios.get(`${requests.fetchAllPokemon}`);
-    dispatch(setAllPokemon(data.results));
-    const show = data.results.filter(
-      (value: resultsType, i: number) => i + 1 <= 20
-    );
-    dispatch(setShowPokemon(show));
-    setLoading(false);
+    try {
+      const { data } = await axios.get(`${requests.fetchAllPokemon}`);
+      dispatch(setAllPokemon(data.results));
+      const show = data.results.filter(
+        (value: resultsType, i: number) => i + 1 <= 20
+      );
+      dispatch(setShowPokemon(show));
+      setLoading(false);
+    } catch (error) {
+      alert(error);
+    }
   };
 
   const renderPokemon = (): React.ReactNode =>
